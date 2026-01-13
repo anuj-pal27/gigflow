@@ -1,91 +1,98 @@
-import {
-  User,
-  ShieldCheck,
-  LogOut,
-  CheckCircle2,
-} from "lucide-react";
-import { Card, Button } from "../ui";
+import { User, Zap, LogOut, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
+import { Card, Button, Badge } from "../ui";
 
 const Dashboard = ({ user, onLogout }) => (
-  <div className="w-full max-w-4xl mx-auto p-4 animate-in fade-in duration-700">
-    <nav className="flex justify-between items-center mb-8 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-full flex items-center justify-center">
-          <ShieldCheck className="w-6 h-6" />
+  <div className="min-h-screen bg-pink-100">
+    {/* Navigation */}
+    <nav className="bg-white border-b-2 border-black px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+      <div className="flex items-center gap-2 font-black text-2xl tracking-tighter italic">
+        <div className="w-10 h-10 bg-pink-500 text-white flex items-center justify-center border-2 border-black rounded-full shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <Sparkles className="w-5 h-5" />
         </div>
-        <div>
-          <h1 className="font-bold text-slate-800 dark:text-white">GigFlow</h1>
-          <p className="text-xs text-green-500 font-medium flex items-center gap-1">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />{" "}
-            Secure Session
-          </p>
-        </div>
+        GigFlow
       </div>
-      <Button onClick={onLogout} variant="secondary" className="w-auto px-6">
-        <LogOut className="w-4 h-4" />
-        Sign Out
-      </Button>
+      <div className="flex items-center gap-4">
+        <div className="text-right hidden sm:block">
+          <div className="text-sm font-black">{user.name}</div>
+          <div className="text-xs font-bold text-gray-500 uppercase">Member</div>
+        </div>
+        <Button variant="secondary" onClick={onLogout} className="px-4 py-2 text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          LOGOUT
+        </Button>
+      </div>
     </nav>
 
-    <div className="grid md:grid-cols-3 gap-6">
-      <Card className="col-span-3 md:col-span-1 p-6 text-center">
-        <div className="w-20 h-20 mx-auto bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mb-4">
-          <User className="w-10 h-10 text-slate-400" />
-        </div>
-        <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-1">
-          {user.name}
-        </h2>
-        <p className="text-slate-500 text-sm mb-4">{user.email}</p>
-        <div className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full font-medium">
-          Verified User
-        </div>
-      </Card>
-
-      <Card className="col-span-3 md:col-span-2 p-6">
-        <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">
-          Security Overview
-        </h3>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/30 rounded-lg border border-slate-100 dark:border-slate-700">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-lg">
-                <CheckCircle2 className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-medium text-slate-800 dark:text-slate-200">
-                  Password Strength
-                </p>
-                <p className="text-xs text-slate-500">
-                  Your password meets all complexity requirements
-                </p>
-              </div>
-            </div>
-            <span className="text-green-600 text-sm font-bold">Strong</span>
+    {/* Main Content */}
+    <div className="max-w-6xl mx-auto p-6 animate-in">
+      <div className="grid md:grid-cols-3 gap-6">
+        {/* Profile Card */}
+        <Card className="p-6 text-center">
+          <div className="w-24 h-24 mx-auto bg-pink-200 border-2 border-black rounded-full flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <User className="w-12 h-12 text-pink-700" />
           </div>
+          <h2 className="text-2xl font-black text-black mb-1 uppercase italic">
+            {user.name}
+          </h2>
+          <p className="text-gray-600 font-medium mb-4">{user.email}</p>
+          <Badge color="green">VERIFIED</Badge>
+        </Card>
 
-          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/30 rounded-lg border border-slate-100 dark:border-slate-700">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg">
-                <ShieldCheck className="w-5 h-5" />
+        {/* Security Card */}
+        <Card className="md:col-span-2 p-6">
+          <h3 className="text-xl font-black text-black mb-6 uppercase italic border-b-2 border-black pb-3">
+            Security Overview
+          </h3>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-green-100 border-2 border-black rounded-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-green-400 border-2 border-black rounded-full flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <p className="font-black text-black uppercase">Password Strength</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Your password meets all requirements
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-slate-800 dark:text-slate-200">
-                  2FA Status
-                </p>
-                <p className="text-xs text-slate-500">
-                  Two-factor authentication is currently disabled
-                </p>
-              </div>
+              <Badge color="green">STRONG</Badge>
             </div>
-            <Button variant="secondary" className="w-auto py-1.5 px-3 text-xs">
-              Enable
-            </Button>
+
+            <div className="flex items-center justify-between p-4 bg-yellow-100 border-2 border-black rounded-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-yellow-400 border-2 border-black rounded-full flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-black" />
+                </div>
+                <div>
+                  <p className="font-black text-black uppercase">2FA Status</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Two-factor authentication is disabled
+                  </p>
+                </div>
+              </div>
+              <Button variant="secondary" className="text-sm py-2 px-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                ENABLE
+              </Button>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+
+        {/* Stats Cards */}
+        <Card className="p-6 bg-blue-100">
+          <div className="text-5xl font-black text-black mb-2">0</div>
+          <div className="text-sm font-bold text-gray-700 uppercase">Active Gigs</div>
+        </Card>
+        <Card className="p-6 bg-green-100">
+          <div className="text-5xl font-black text-black mb-2">$0</div>
+          <div className="text-sm font-bold text-gray-700 uppercase">Total Earned</div>
+        </Card>
+        <Card className="p-6 bg-purple-100">
+          <div className="text-5xl font-black text-black mb-2">0</div>
+          <div className="text-sm font-bold text-gray-700 uppercase">Completed</div>
+        </Card>
+      </div>
     </div>
   </div>
 );
 
 export default Dashboard;
-

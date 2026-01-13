@@ -9,20 +9,20 @@ const PasswordStrengthMeter = ({ password }) => {
   const checks = getPasswordChecks(password);
 
   const getColor = (s) => {
-    if (s <= 1) return "bg-red-500";
-    if (s === 2) return "bg-orange-500";
-    if (s === 3) return "bg-yellow-500";
-    return "bg-green-500";
+    if (s <= 1) return "bg-red-400";
+    if (s === 2) return "bg-orange-400";
+    if (s === 3) return "bg-yellow-400";
+    return "bg-green-400";
   };
 
   return (
-    <div className="space-y-2 mt-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-100 dark:border-slate-700/50">
-      <div className="flex gap-1 h-1.5 w-full">
+    <div className="space-y-3 mt-3 p-4 bg-pink-50 border-2 border-black rounded-2xl">
+      <div className="flex gap-1.5 h-2.5 w-full">
         {[1, 2, 3, 4].map((step) => (
           <div
             key={step}
-            className={`h-full flex-1 rounded-full transition-all duration-300 ${
-              strength >= step ? getColor(strength) : "bg-slate-200 dark:bg-slate-700"
+            className={`h-full flex-1 border-2 border-black rounded-full transition-all duration-300 ${
+              strength >= step ? getColor(strength) : "bg-white"
             }`}
           />
         ))}
@@ -31,14 +31,14 @@ const PasswordStrengthMeter = ({ password }) => {
         {checks.map((check) => (
           <div
             key={check.label}
-            className={`text-xs flex items-center gap-1.5 transition-colors ${
-              check.met ? "text-green-600 dark:text-green-400" : "text-slate-400"
+            className={`text-xs font-bold flex items-center gap-1.5 transition-colors uppercase ${
+              check.met ? "text-green-700" : "text-gray-400"
             }`}
           >
             {check.met ? (
-              <CheckCircle2 className="w-3 h-3" />
+              <CheckCircle2 className="w-4 h-4" />
             ) : (
-              <div className="w-3 h-3 rounded-full border border-current" />
+              <div className="w-4 h-4 rounded-full border-2 border-current" />
             )}
             {check.label}
           </div>
@@ -49,4 +49,3 @@ const PasswordStrengthMeter = ({ password }) => {
 };
 
 export default PasswordStrengthMeter;
-

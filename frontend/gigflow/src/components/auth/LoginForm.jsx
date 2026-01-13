@@ -18,14 +18,12 @@ const LoginForm = ({ onLogin, onSwitch, error, isLoading }) => {
   };
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
+    <div className="animate-in">
+      <div className="mb-8">
+        <h2 className="text-4xl font-black text-black uppercase italic mb-2">
           Welcome Back
         </h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-          Enter your credentials to access your account
-        </p>
+        <div className="h-2 w-20 bg-pink-500 border-2 border-black rounded-full"></div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -50,29 +48,28 @@ const LoginForm = ({ onLogin, onSwitch, error, isLoading }) => {
         />
 
         {(error || localError) && (
-          <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm text-center">
-            {error || localError}
+          <div className="p-3 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 font-bold text-sm flex items-center gap-2">
+            <span className="text-xl">!</span> {error || localError}
           </div>
         )}
 
-        <Button type="submit" isLoading={isLoading}>
-          Sign In
-          <ArrowRight className="w-4 h-4" />
+        <Button type="submit" isLoading={isLoading} className="w-full text-lg h-14">
+          ENTER DASHBOARD
+          <ArrowRight className="w-5 h-5" />
         </Button>
       </form>
 
-      <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
-        Don&apos;t have an account?{" "}
+      <div className="mt-8 text-center text-sm font-bold">
+        New here?{" "}
         <button
           onClick={onSwitch}
-          className="text-blue-600 hover:text-blue-700 font-semibold hover:underline"
+          className="text-pink-600 underline decoration-2 decoration-wavy hover:text-pink-700"
         >
-          Create one
+          Create an account
         </button>
-      </p>
+      </div>
     </div>
   );
 };
 
 export default LoginForm;
-

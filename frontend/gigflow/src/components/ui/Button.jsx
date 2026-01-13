@@ -1,36 +1,49 @@
-import { Loader2 } from "lucide-react";
+import React from 'react';
+import { Loader2 } from 'lucide-react';
 
-const Button = ({
-  children,
-  onClick,
-  type = "button",
-  variant = "primary",
-  isLoading,
+const STYLE = {
+  border: 'border-black',
+  shadow: 'shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]',
+  radius: 'rounded-2xl',
+  primary: 'bg-pink-500 text-white hover:bg-pink-600',
+  secondary: 'bg-white text-black hover:bg-pink-50',
+  accent: 'bg-green-400 text-black hover:bg-green-300',
+};
+
+const Button = ({ 
+  children, 
+  variant = 'primary', 
+  isLoading = false, 
   disabled,
-  className = "",
+  className = '', 
+  ...props 
 }) => {
-  const baseStyle =
-    "w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.98]";
-
+  const base = `px-6 py-3 font-black border-2 ${STYLE.border} ${STYLE.radius} transition-all duration-200 flex items-center justify-center gap-2 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed disabled:active:translate-y-0`;
   const variants = {
-    primary:
-      "bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/30",
-    secondary:
-      "bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200",
-    danger: "bg-red-500 hover:bg-red-600 text-white",
+    primary: `${STYLE.primary} ${STYLE.shadow}`,
+    secondary: `${STYLE.secondary} ${STYLE.shadow}`,
+    accent: `${STYLE.accent} ${STYLE.shadow}`,
+    ghost: `bg-transparent border-transparent hover:bg-black/5`,
+    outline: `bg-transparent border-2 border-black hover:bg-white ${STYLE.shadow}`,
+    danger: `bg-red-500 text-white hover:bg-red-600 ${STYLE.shadow}`,
   };
 
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled || isLoading}
-      className={`${baseStyle} ${variants[variant]} ${className}`}
+    <button 
+      className={`${base} ${variants[variant]} ${className}`} 
+      disabled={isLoading || disabled}
+      {...props}
     >
-      {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : children}
+      {isLoading ? (
+        <>
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span>Loading...</span>
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 };
 
 export default Button;
-

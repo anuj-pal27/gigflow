@@ -1,10 +1,11 @@
-const Card = ({ children, className = "" }) => (
+const Card = ({ children, className = "", noShadow = false }) => (
   <div
-    className={`bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700 ${className}`}
+    className={`bg-white border-2 border-black rounded-2xl overflow-hidden ${
+      noShadow ? "" : "brutal-shadow"
+    } ${className}`}
   >
     {children}
   </div>
 );
 
 export default Card;
-

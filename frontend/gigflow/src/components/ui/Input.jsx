@@ -1,64 +1,72 @@
-import { useState } from "react";
-import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
-const Input = ({
-  label,
-  type = "text",
-  placeholder,
-  icon: Icon,
-  value,
+const Input = ({ 
+  label, 
+  icon: Icon, 
+  isPassword, 
+  error, 
+  textarea, 
   onChange,
-  error,
-  isPassword = false,
+  className = '', 
+  ...props 
 }) => {
-  const [showPass, setShowPass] = useState(false);
-  const inputType = isPassword ? (showPass ? "text" : "password") : type;
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) => {
+    // Support both direct value and event-based onChange
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+
+  const inputType = isPassword ? (showPassword ? 'text' : 'password') : props.type || 'text';
+
+  const baseInputClasses = `w-full p-3 ${Icon ? 'pl-11' : ''} ${isPassword ? 'pr-11' : ''} border-2 border-black rounded-xl outline-none focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all font-medium bg-white`;
+  const errorClasses = error ? 'border-red-500 bg-red-50' : '';
 
   return (
-    <div className="space-y-1.5">
-      <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 ml-1">
-        {label}
-      </label>
-      <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
-          {Icon && <Icon className="w-5 h-5" />}
-        </div>
-        <input
-          type={inputType}
-          className={`w-full pl-10 pr-10 py-3 bg-slate-50 dark:bg-slate-900 border rounded-xl outline-none transition-all duration-200
-            ${
-              error
-                ? "border-red-500 focus:ring-2 focus:ring-red-500/20"
-                : "border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-slate-800 dark:text-slate-100"
-            }
-          `}
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
+    <div className={`space-y-2 w-full ${className}`}>
+      {label && (
+        <label className="block text-sm font-black uppercase">{label}</label>
+      )}
+      
+      <div className="relative">
+        {Icon && (
+          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        )}
+        
+        {textarea ? (
+          <textarea 
+            {...props}
+            onChange={handleChange}
+            className={`${baseInputClasses} ${errorClasses} min-h-[100px]`}
+          />
+        ) : (
+          <input 
+            {...props}
+            type={inputType}
+            onChange={handleChange}
+            className={`${baseInputClasses} ${errorClasses}`}
+          />
+        )}
+
         {isPassword && (
           <button
             type="button"
-            onClick={() => setShowPass(!showPass)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer transition-colors"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
           >
-            {showPass ? (
-              <EyeOff className="w-5 h-5" />
-            ) : (
-              <Eye className="w-5 h-5" />
-            )}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         )}
       </div>
+
       {error && (
-        <div className="flex items-center gap-1 text-red-500 text-xs ml-1 animate-in slide-in-from-left-1">
-          <AlertCircle className="w-3 h-3" />
-          {error}
-        </div>
+        <p className="text-red-500 text-xs font-bold">{error}</p>
       )}
     </div>
   );
 };
 
 export default Input;
-

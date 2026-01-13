@@ -2,8 +2,12 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import http from "http";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.js";
+import gigRoutes from "./routes/gigs.js";
+import bidRoutes from "./routes/bids.js";
+import { initSocket } from "./socket.js";
 
 dotenv.config();
 
@@ -25,6 +29,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/gigs", gigRoutes);
+app.use("/api/bids", bidRoutes);
 
 // Test route
 app.get("/", (req, res) => {
@@ -40,6 +46,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+const server = http.createServer(app);
+initSocket(server);
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

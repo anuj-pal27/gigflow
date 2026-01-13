@@ -29,20 +29,18 @@ const SignupForm = ({ onSignup, onSwitch, error, isLoading }) => {
   };
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
-          Create Account
+    <div className="animate-in">
+      <div className="mb-8">
+        <h2 className="text-4xl font-black text-black uppercase italic mb-2">
+          Join GigFlow
         </h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-          Start your journey with us securely
-        </p>
+        <div className="h-2 w-20 bg-pink-500 border-2 border-black rounded-full"></div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Full Name"
-          placeholder="John Doe"
+          placeholder="Jane Doe"
           icon={User}
           value={name}
           onChange={(v) => {
@@ -94,28 +92,27 @@ const SignupForm = ({ onSignup, onSwitch, error, isLoading }) => {
         />
 
         {error && (
-          <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm text-center">
-            {error}
+          <div className="p-3 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 font-bold text-sm flex items-center gap-2">
+            <span className="text-xl">!</span> {error}
           </div>
         )}
 
-        <Button type="submit" isLoading={isLoading} className="mt-6">
-          Create Account
+        <Button type="submit" isLoading={isLoading} className="w-full text-lg h-14 mt-6">
+          CREATE ACCOUNT
         </Button>
       </form>
 
-      <p className="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
+      <div className="mt-8 text-center text-sm font-bold">
         Already have an account?{" "}
         <button
           onClick={onSwitch}
-          className="text-blue-600 hover:text-blue-700 font-semibold hover:underline"
+          className="text-pink-600 underline decoration-2 decoration-wavy hover:text-pink-700"
         >
-          Sign in
+          Log in now
         </button>
-      </p>
+      </div>
     </div>
   );
 };
 
 export default SignupForm;
-
