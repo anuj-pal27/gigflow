@@ -18,9 +18,22 @@ const PORT = process.env.PORT || 8080;
 connectDB();
 
 // Middleware
+const normalizeOrigin = (value) => (value ? value.replace(/\/$/, "") : value);
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((o) => normalizeOrigin(o.trim()))
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      // allow non-browser clients (curl/postman) that send no Origin
+      if (!origin) return callback(null, true);
+      const normalized = normalizeOrigin(origin);
+      // Return the normalized origin string to avoid any trailing-slash mismatch
+      if (allowedOrigins.includes(normalized)) return callback(null, normalized);
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   })
 );

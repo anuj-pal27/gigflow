@@ -10,12 +10,21 @@ const generateToken = (id) => {
 };
 
 // Cookie options
-const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-});
+const getCookieOptions = () => {
+  const isProd = process.env.NODE_ENV === "production";
+
+  // For Vercel (frontend) + Render (backend), cookies are cross-site.
+  // Cross-site cookies require SameSite=None + Secure.
+  const sameSite =
+    process.env.COOKIE_SAMESITE || (isProd ? "none" : "lax");
+
+  return {
+    httpOnly: true,
+    secure: isProd, // must be true if SameSite=None
+    sameSite,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  };
+};
 
 // @desc    Register a new user
 // @route   POST /api/auth/register

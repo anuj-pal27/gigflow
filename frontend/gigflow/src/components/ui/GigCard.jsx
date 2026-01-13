@@ -7,7 +7,7 @@ const GigCard = ({ gig }) => (
       className={`h-40 ${gig.imageColor} border-b-2 border-black flex items-center justify-center relative`}
     >
       <span className="font-black text-4xl opacity-20 uppercase tracking-widest">
-        <img src="./public/Webdev.png" alt="Web Development" />
+        <img src="/Webdev.png" alt="Web Development" />
       </span>
       {gig.tag && (
         <span

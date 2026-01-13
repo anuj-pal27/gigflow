@@ -18,9 +18,15 @@ function parseCookies(cookieHeader = "") {
 }
 
 export function initSocket(httpServer) {
+  const normalizeOrigin = (value) => (value ? value.replace(/\/$/, "") : value);
+  const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+    .split(",")
+    .map((o) => normalizeOrigin(o.trim()))
+    .filter(Boolean);
+
   io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      origin: allowedOrigins,
       credentials: true,
     },
   });
