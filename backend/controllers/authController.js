@@ -20,7 +20,8 @@ const getCookieOptions = () => {
 
   return {
     httpOnly: true,
-    secure: isProd, // must be true if SameSite=None
+    // Must be true if SameSite=None (cross-site cookies)
+    secure: isProd || String(sameSite).toLowerCase() === "none",
     sameSite,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   };
@@ -180,9 +181,12 @@ export const getMe = async (req, res) => {
 // @route   POST /api/auth/logout
 // @access  Private
 export const logout = (req, res) => {
+  // Use the same cookie flags so the browser actually clears the auth cookie
+  const opts = getCookieOptions();
   res.cookie("token", "", {
-    httpOnly: true,
+    ...opts,
     expires: new Date(0),
+    maxAge: 0,
   });
 
   res.json({
