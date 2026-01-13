@@ -42,6 +42,8 @@ npm install
 
 ### 2) Create `backend/.env`
 
+This repo includes an example env file at `backend/env.example`.
+
 Create a `.env` file inside `backend/`:
 
 ```env
@@ -78,7 +80,7 @@ npm install
 ### 2) (Optional) Set API URL
 
 By default the frontend calls `http://localhost:8080/api`.
-If you want to override it, create `frontend/gigflow/.env`:
+If you want to override it, use `frontend/gigflow/env.example` as reference and create `frontend/gigflow/.env`:
 
 ```env
 VITE_API_URL=http://localhost:8080/api
