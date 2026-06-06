@@ -1,0 +1,25 @@
+services:
+  # Node.js backend
+  backend:
+    build: ./backend
+    container_name: gigflow-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./backend/.env
+    environment:
+      # You can still override specific values here if needed, 
+      # but they will load by default from backend/.env
+      - PORT=8080
+
+  # Vite+React frontend
+  frontend:
+    build: ./frontend/gigflow
+    container_name: gigflow-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080/api
+      - VITE_SOCKET_URL=http://localhost:8080
+    depends_on:
+      - backend
